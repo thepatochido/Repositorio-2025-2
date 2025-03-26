@@ -1,0 +1,132 @@
+<?xml version="1.0" ?>
+<robot name="Practica_1">
+
+    <material name="deep_blue">
+        <color rgba="0.2 0.4 0.8 1"/>
+    </material>
+    <material name="coral">
+        <color rgba="1.0 0.5 0.4 1"/>
+    </material>
+    <material name="mint">
+        <color rgba="0.6 1.0 0.8 1"/>
+    </material>
+    <material name="lavender">
+        <color rgba="0.8 0.6 1.0 1"/>
+    </material>
+    <material name="sunshine">
+        <color rgba="1.0 0.9 0.4 1"/>
+    </material>
+    <material name="sky_blue">
+        <color rgba="0.4 0.8 1.0 1"/>
+    </material>
+    <material name="warm_gray">
+        <color rgba="0.4 0.4 0.4 1"/>
+    </material>
+
+   
+    <link name="world"/>
+    
+    <link name="base">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.1"/>
+            </geometry>
+            <material name="warm_gray"/>
+        </visual>
+    </link>
+    
+    <link name="base_poste">
+        <visual>
+            <origin xyz="0 0 0.2" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.06" length="0.4"/>
+            </geometry>
+            <material name="deep_blue"/>
+        </visual>
+    </link>
+    
+    <link name="eslabon_1">
+        <visual>
+            <origin xyz="0.25 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.5 0.06 0.06"/>
+            </geometry>
+            <material name="coral"/>
+        </visual>
+    </link>
+    
+    <link name="eslabon_2">
+        <visual>
+            <origin xyz="0.25 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.5 0.06 0.06"/>
+            </geometry>
+            <material name="mint"/>
+        </visual>
+    </link>
+    
+    <link name="sujetador">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.03" length="0.05"/>
+            </geometry>
+            <material name="sunshine"/>
+        </visual>
+    </link>
+    
+    <link name="saliente">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.015" length="0.05"/>
+            </geometry>
+            <material name="lavender"/>
+        </visual>
+    </link>
+
+    
+    <joint name="world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base"/>
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    
+    <joint name="poste_joint" type="fixed">
+        <parent link="base"/>
+        <child link="base_poste"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    
+    <joint name="Giro_V" type="revolute">
+        <parent link="base_poste"/>
+        <child link="eslabon_1"/>
+        <origin xyz="0 0 0.4" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    
+    <joint name="Giro_R" type="revolute">
+        <parent link="eslabon_1"/>
+        <child link="eslabon_2"/>
+        <origin xyz="0.35 0 0.06" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    
+    <joint name="sujetador_joint" type="fixed">
+        <parent link="eslabon_2"/>
+        <child link="sujetador"/>
+        <origin xyz="0.45 0 -0.05" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    
+    <joint name="Desplaz_O" type="prismatic">
+        <parent link="sujetador"/>
+        <child link="saliente"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="10.0" lower="-0.05" upper="0" velocity="0.5"/>
+    </joint>
+</robot>
